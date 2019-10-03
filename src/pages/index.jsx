@@ -1,14 +1,15 @@
-import { css } from '@emotion/core'
-import { graphql } from 'gatsby'
-import { Parser } from 'html-to-react'
-import React from 'react'
-import Layout from '../components/Layout'
+import { css } from '@emotion/core';
+import { graphql } from 'gatsby';
+import { Parser } from 'html-to-react';
+import React from 'react';
+import Layout from '../components/Layout';
+import Header from '../components/Header';
 
 const container = css`
-  margin: 0 auto;
-  padding: 4rem 2rem 8rem 2rem;
-  max-width: 600px;
+  max-width: 500px;
   color: #333333;
+  margin: auto;
+  margin-top: 50px;
 
   h1 {
     font-size: 30px;
@@ -78,19 +79,21 @@ const container = css`
     background-color: #f1f5f7;
     white-space: nowrap;
   }
-`
+`;
 
-const htmlToReactParser = new Parser()
+const htmlToReactParser = new Parser();
 
 export default props => {
-  const { data } = props
-  const content = data.prismicHomepage.data
-  const name = content.name.text
-  const description = content.description.html
+  const { data } = props;
+  const content = data.prismicMain.data;
+  const name = content.name.text;
+  const description = content.description.html;
 
   const sections = content.body.map(section => {
-    const title = section.primary.title.text
-    const items = section.items.map(item => htmlToReactParser.parse(item.content.html))
+    const title = section.primary.title.text;
+    const items = section.items.map(item =>
+      htmlToReactParser.parse(item.content.html),
+    );
 
     if (section.slice_type === 'section') {
       return (
@@ -98,7 +101,7 @@ export default props => {
           <h2>{title}</h2>
           <div>{items}</div>
         </div>
-      )
+      );
     }
     if (section.slice_type === 'skills') {
       return (
@@ -106,24 +109,24 @@ export default props => {
           <h2>{title}</h2>
           <div>{items}</div>
         </div>
-      )
+      );
     }
-  })
+  });
 
   return (
     <Layout>
       <div css={container}>
-        <h1>{name}</h1>
+        <Header name={name} />
         {htmlToReactParser.parse(description)}
         {sections}
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 export const pageQuery = graphql`
   query {
-    prismicHomepage {
+    prismicMain {
       data {
         name {
           text
@@ -132,7 +135,7 @@ export const pageQuery = graphql`
           html
         }
         body {
-          ... on PrismicHomepageBodySection {
+          ... on PrismicMainBodySection {
             slice_type
             primary {
               title {
@@ -145,7 +148,7 @@ export const pageQuery = graphql`
               }
             }
           }
-          ... on PrismicHomepageBodySkills {
+          ... on PrismicMainBodySkills {
             slice_type
             primary {
               title {
@@ -162,4 +165,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

@@ -1,6 +1,6 @@
 require('dotenv').config({
   path: `.env`,
-})
+});
 
 module.exports = {
   plugins: [
@@ -9,9 +9,9 @@ module.exports = {
     {
       resolve: 'gatsby-source-prismic',
       options: {
-        repositoryName: 'resume-test',
+        repositoryName: 'emasuriano-cv',
         accessToken: process.env.API_KEY,
       },
     },
   ],
-}
+};
