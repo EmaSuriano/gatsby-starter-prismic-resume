@@ -2,6 +2,7 @@ import { css } from '@emotion/core';
 import { graphql, useStaticQuery } from 'gatsby';
 import { Parser } from 'html-to-react';
 import React from 'react';
+import { RichText } from 'prismic-reactjs';
 import Layout from '../components/Layout';
 import Header from '../components/Header';
 
@@ -103,46 +104,33 @@ const MainTemplate = ({ name, description, sections = [], showMenu }) => (
 );
 
 const Main = () => {
-  const { prismicMain, site } = useStaticQuery(graphql`
-    query {
-      prismicMain {
-        data {
-          name {
-            text
-            html
-          }
-          description {
-            text
-            html
-          }
-          body {
-            ... on PrismicMainBodySection {
-              slice_type
-              primary {
-                title {
-                  text
-                  html
+  const { prismic, site } = useStaticQuery(graphql`
+    {
+      prismic {
+        allMains {
+          edges {
+            node {
+              accent
+              name
+              description
+              body {
+                ... on PRISMIC_MainBodySection {
+                  type
+                  primary {
+                    title
+                  }
+                  fields {
+                    content
+                  }
                 }
-              }
-              items {
-                content {
-                  text
-                  html
-                }
-              }
-            }
-            ... on PrismicMainBodySkills {
-              slice_type
-              primary {
-                title {
-                  text
-                  html
-                }
-              }
-              items {
-                content {
-                  text
-                  html
+                ... on PRISMIC_MainBodySkills {
+                  type
+                  primary {
+                    title
+                  }
+                  fields {
+                    content
+                  }
                 }
               }
             }
@@ -157,23 +145,24 @@ const Main = () => {
     }
   `);
 
-  const { name, description, body } = prismicMain.data;
+  console.log(prismic.allMains.edges);
+  const { name, description, body } = prismic.allMains.edges[0].node;
   const { cvFormat } = site.siteMetadata;
 
-  const sections = body.map(section => {
-    const { primary, items, slice_type: type } = section;
+  // const sections = body.map(section => {
+  //   const { primary, items, slice_type: type } = section;
 
-    return {
-      type,
-      title: primary.title.text,
-      content: items.map(item => htmlToReactParser.parse(item.content.html)),
-    };
-  });
+  //   return {
+  //     type,
+  //     title: primary.title.text,
+  //     content: items.map(item => htmlToReactParser.parse(item.content.html)),
+  //   };
+  // });
   return (
     <MainTemplate
-      name={name.text}
-      description={htmlToReactParser.parse(description.html)}
-      sections={sections}
+      name={RichText.render(name)}
+      // description={htmlToReactParser.parse(description.html)}
+      sections={[]}
       showMenu={!cvFormat}
     />
   );
