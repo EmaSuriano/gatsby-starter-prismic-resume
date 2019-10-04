@@ -4,12 +4,13 @@
     "build": "gatsby build",
     "dev": "gatsby develop -o",
     "serve": "gatsby serve",
-    "generate-pdf": "node generate-pdf",
-    "lint": "eslint . --ext .js,.jsx --ignore-path .gitignore"
+    "lint": "eslint . --ext .js,.jsx --ignore-path .gitignore",
+    "generate-cv": "CV_FORMAT=true start-server-and-test dev http://localhost:8000 'node generate-cv'"
   },
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.17",
+    "dotenv": "^8.1.0",
     "emotion": "^10.0.7",
     "gatsby": "^2.0.118",
     "gatsby-plugin-emotion": "^4.0.3",
@@ -20,11 +21,12 @@
     "puppeteer": "^1.20.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "react-icons": "^3.7.0",
+    "start-server-and-test": "^1.10.4"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "dotenv": "^7.0.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.0.0",

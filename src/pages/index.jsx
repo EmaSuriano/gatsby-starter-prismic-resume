@@ -1,5 +1,5 @@
 import { css } from '@emotion/core';
-import { graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 import { Parser } from 'html-to-react';
 import React from 'react';
 import Layout from '../components/Layout';
@@ -19,7 +19,6 @@ const container = css`
   }
 
   h2 {
-    margin-top: 4rem;
     font-size: 12px;
     font-weight: 600;
     color: #c9cccf;
@@ -42,6 +41,11 @@ const container = css`
     }
   }
 
+  .section,
+  .skills {
+    margin-top: 4rem;
+  }
+
   .section ul {
     margin-top: 0.5rem;
     margin-left: 2.5rem;
@@ -50,10 +54,6 @@ const container = css`
 
   .section li {
     margin-bottom: 0.5rem;
-  }
-
-  .grey {
-    color: #96999b;
   }
 
   .headline {
@@ -83,86 +83,141 @@ const container = css`
 
 const htmlToReactParser = new Parser();
 
-export default props => {
-  const { data } = props;
-  const content = data.prismicMain.data;
-  const name = content.name.text;
-  const description = content.description.html;
+const Section = ({ type, title, content }) => (
+  <div className={type}>
+    <h2>{title}</h2>
+    <div>{content}</div>
+  </div>
+);
 
-  const sections = content.body.map(section => {
-    const title = section.primary.title.text;
-    const items = section.items.map(item =>
-      htmlToReactParser.parse(item.content.html),
-    );
+const MainTemplate = ({ name, description, sections = [], showMenu }) => (
+  <Layout>
+    <div css={container}>
+      <Header name={name} showMenu={showMenu} />
+      {description}
+      {sections.map(asd => (
+        <Section {...asd} />
+      ))}
+    </div>
+  </Layout>
+);
 
-    if (section.slice_type === 'section') {
-      return (
-        <div className="section">
-          <h2>{title}</h2>
-          <div>{items}</div>
-        </div>
-      );
-    }
-    if (section.slice_type === 'skills') {
-      return (
-        <div className="skills">
-          <h2>{title}</h2>
-          <div>{items}</div>
-        </div>
-      );
-    }
-  });
-
-  return (
-    <Layout>
-      <div css={container}>
-        <Header name={name} />
-        {htmlToReactParser.parse(description)}
-        {sections}
-      </div>
-    </Layout>
-  );
-};
-
-export const pageQuery = graphql`
-  query {
-    prismicMain {
-      data {
-        name {
-          text
-        }
-        description {
-          html
-        }
-        body {
-          ... on PrismicMainBodySection {
-            slice_type
-            primary {
-              title {
-                text
-              }
-            }
-            items {
-              content {
-                html
-              }
-            }
+const Main = () => {
+  const { prismicMain, site } = useStaticQuery(graphql`
+    query {
+      prismicMain {
+        data {
+          name {
+            text
+            html
           }
-          ... on PrismicMainBodySkills {
-            slice_type
-            primary {
-              title {
-                text
+          description {
+            text
+            html
+          }
+          body {
+            ... on PrismicMainBodySection {
+              slice_type
+              primary {
+                title {
+                  text
+                  html
+                }
+              }
+              items {
+                content {
+                  text
+                  html
+                }
               }
             }
-            items {
-              content {
-                html
+            ... on PrismicMainBodySkills {
+              slice_type
+              primary {
+                title {
+                  text
+                  html
+                }
+              }
+              items {
+                content {
+                  text
+                  html
+                }
               }
             }
           }
         }
       }
+      site {
+        siteMetadata {
+          cvFormat
+        }
+      }
     }
-  }
-`;
+  `);
+
+  const { name, description, body } = prismicMain.data;
+  const { cvFormat } = site.siteMetadata;
+
+  const sections = body.map(section => {
+    const { primary, items, slice_type: type } = section;
+
+    return {
+      type,
+      title: primary.title.text,
+      content: items.map(item => htmlToReactParser.parse(item.content.html)),
+    };
+  });
+  return (
+    <MainTemplate
+      name={name.text}
+      description={htmlToReactParser.parse(description.html)}
+      sections={sections}
+      showMenu={!cvFormat}
+    />
+  );
+};
+
+// export default props => {
+//   const { data } = props;
+//   const content = data.prismicMain.data;
+//   const name = content.name.text;
+//   const description = content.description.html;
+
+//   const sections = content.body.map(section => {
+//     const title = section.primary.title.text;
+//     const items = section.items.map(item =>
+//       htmlToReactParser.parse(item.content.html),
+//     );
+
+//     if (section.slice_type === 'section') {
+//       return (
+//         <div className="section">
+//           <h2>{title}</h2>
+//           <div>{items}</div>
+//         </div>
+//       );
+//     }
+//     if (section.slice_type === 'skills') {
+//       return (
+//         <div className="skills">
+//           <h2>{title}</h2>
+//           <div>{items}</div>
+//         </div>
+//       );
+//     }
+//   });
+
+//   return (
+//     <Layout>
+//       <div css={container}>
+//         <Header name={name} />
+//         {htmlToReactParser.parse(description)}
+//         {sections}
+//       </div>
+//     </Layout>
+//   );
+// };
+
+export default Main;

@@ -14,4 +14,8 @@ module.exports = {
       },
     },
   ],
+  siteMetadata: {
+    title: 'Gatsby Theme Jam Example Submission',
+    cvFormat: !!process.env.CV_FORMAT,
+  },
 };
