@@ -1,5 +1,7 @@
 # Gatsby Starter: Resume/CV Site with Prismic
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/99a743de-c9a7-4f57-a2bc-ff00ee33f1d1/deploy-status)](https://app.netlify.com/sites/emasuriano-cv/deploys)
+
 This project is part of a YouTube series that's about building a Resume/CV site using Gatsby, Prismic and Netlify from scratch. You can check out the following series here:
 
 https://www.youtube.com/watch?v=9eCOcJZR578&list=PLy3RjrA8UIYJZ08w6bmSDNX10ysI8JuDk

@@ -14,3 +14,4 @@
   - [ ] Show email
   - [ ] Add link to my website
 - [ ] Open source it?
+- [ ] Add 404 page

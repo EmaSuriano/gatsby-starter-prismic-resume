@@ -5,7 +5,8 @@
     "dev": "gatsby develop -o",
     "serve": "gatsby serve",
     "lint": "eslint . --ext .js,.jsx --ignore-path .gitignore",
-    "generate-cv": "CV_FORMAT=true start-server-and-test dev http://localhost:8000 'node generate-cv'"
+    "generate-cv": "CV_FORMAT=true start-server-and-test dev http://localhost:8000 'node generate-cv'",
+    "deploy": "npm run generate-cv; npm run build"
   },
   "dependencies": {
     "@emotion/core": "^10.0.7",
