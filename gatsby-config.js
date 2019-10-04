@@ -11,6 +11,8 @@ module.exports = {
       options: {
         repositoryName: 'emasuriano-cv',
         accessToken: process.env.API_KEY,
+        path: '/preview',
+        previews: true,
       },
     },
   ],

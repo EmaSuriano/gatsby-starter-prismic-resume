@@ -6,6 +6,7 @@
 - [ ] Finish styles from here --> https://standardresume.co/r/dana-andrews
   - [ ] Make it responsive
 - [ ] Make it PWA
+- [x] Set up Webhook with Prismic 🔥
 - [ ] Fix a11y issues
 - [ ] Check Lighthouse score
 - [ ] Set Prismic preview --> https://prismic.io/blog/prismic-gatsby-preview-plugin
