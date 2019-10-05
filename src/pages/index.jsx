@@ -1,6 +1,5 @@
 import { css } from '@emotion/core';
-import { graphql, useStaticQuery } from 'gatsby';
-import { Parser } from 'html-to-react';
+import { graphql } from 'gatsby';
 import React from 'react';
 import { RichText } from 'prismic-reactjs';
 import Layout from '../components/Layout';
@@ -82,8 +81,6 @@ const container = css`
   }
 `;
 
-const htmlToReactParser = new Parser();
-
 const Section = ({ type, title, content }) => (
   <div className={type}>
     <h2>{title}</h2>
@@ -103,110 +100,71 @@ const MainTemplate = ({ name, description, sections = [], showMenu }) => (
   </Layout>
 );
 
-const Main = () => {
-  const { prismic, site } = useStaticQuery(graphql`
-    {
-      prismic {
-        allMains {
-          edges {
-            node {
-              accent
-              name
-              description
-              body {
-                ... on PRISMIC_MainBodySection {
-                  type
-                  primary {
-                    title
-                  }
-                  fields {
-                    content
-                  }
+export const query = graphql`
+  {
+    prismic {
+      allMains {
+        edges {
+          node {
+            accent
+            name
+            description
+            body {
+              ... on PRISMIC_MainBodySection {
+                type
+                primary {
+                  title
                 }
-                ... on PRISMIC_MainBodySkills {
-                  type
-                  primary {
-                    title
-                  }
-                  fields {
-                    content
-                  }
+                fields {
+                  content
+                }
+              }
+              ... on PRISMIC_MainBodySkills {
+                type
+                primary {
+                  title
+                }
+                fields {
+                  content
                 }
               }
             }
           }
         }
       }
-      site {
-        siteMetadata {
-          cvFormat
-        }
+    }
+    site {
+      siteMetadata {
+        cvFormat
       }
     }
-  `);
+  }
+`;
 
-  console.log(prismic.allMains.edges);
-  const { name, description, body } = prismic.allMains.edges[0].node;
-  const { cvFormat } = site.siteMetadata;
+const Main = ({ data }) => {
+  const main = data.prismic.allMains.edges.slice(0, 1).pop();
+  if (!main) return null;
 
-  // const sections = body.map(section => {
-  //   const { primary, items, slice_type: type } = section;
+  const { name, description, body } = main.node;
 
-  //   return {
-  //     type,
-  //     title: primary.title.text,
-  //     content: items.map(item => htmlToReactParser.parse(item.content.html)),
-  //   };
-  // });
+  const sections = body.map(section => {
+    const { primary, fields, type } = section;
+
+    return {
+      type,
+      title: RichText.render(primary.title),
+      content: fields.map(({ content }) => RichText.render(content)),
+    };
+  });
+
   return (
     <MainTemplate
       name={RichText.render(name)}
-      // description={htmlToReactParser.parse(description.html)}
-      sections={[]}
-      showMenu={!cvFormat}
+      description={RichText.render(description)}
+      sections={sections}
+      showMenu={!data.site.siteMetadata.cvFormat}
     />
   );
 };
-
-// export default props => {
-//   const { data } = props;
-//   const content = data.prismicMain.data;
-//   const name = content.name.text;
-//   const description = content.description.html;
-
-//   const sections = content.body.map(section => {
-//     const title = section.primary.title.text;
-//     const items = section.items.map(item =>
-//       htmlToReactParser.parse(item.content.html),
-//     );
-
-//     if (section.slice_type === 'section') {
-//       return (
-//         <div className="section">
-//           <h2>{title}</h2>
-//           <div>{items}</div>
-//         </div>
-//       );
-//     }
-//     if (section.slice_type === 'skills') {
-//       return (
-//         <div className="skills">
-//           <h2>{title}</h2>
-//           <div>{items}</div>
-//         </div>
-//       );
-//     }
-//   });
-
-//   return (
-//     <Layout>
-//       <div css={container}>
-//         <Header name={name} />
-//         {htmlToReactParser.parse(description)}
-//         {sections}
-//       </div>
-//     </Layout>
-//   );
-// };
 
 export default Main;
