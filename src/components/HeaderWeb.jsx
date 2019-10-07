@@ -21,20 +21,18 @@ const HeaderMenu = styled.div`
   }
 `;
 
-const Header = ({ name, contact, showMenu }) => (
+const HeaderWeb = ({ name, contact }) => (
   <header style={{ position: 'relative' }}>
-    {showMenu && (
-      <MenusWrap>
-        <a href="/static/cv.pdf" download={`${name} - CV`}>
-          <HeaderMenu>
-            <MdFileDownload size={24} />
-            <h2>Download</h2>
-          </HeaderMenu>
-        </a>
-      </MenusWrap>
-    )}
+    <MenusWrap>
+      <a href="/static/cv.pdf" download={`${name} - CV`}>
+        <HeaderMenu>
+          <MdFileDownload size={24} />
+          <h2>Download</h2>
+        </HeaderMenu>
+      </a>
+    </MenusWrap>
     <h1>{name}</h1>
   </header>
 );
 
-export default Header;
+export default HeaderWeb;

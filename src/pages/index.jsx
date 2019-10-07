@@ -1,13 +1,16 @@
 import { css } from '@emotion/core';
 import { graphql } from 'gatsby';
 import React from 'react';
+import { lighten, darken } from 'polished';
 import { RichText } from 'prismic-reactjs';
 import Layout from '../components/Layout';
-import Header from '../components/Header';
+import HeaderCV from '../components/HeaderCV';
+import HeaderWeb from '../components/HeaderWeb';
+import theme from '../theme.json';
 
 const container = css`
   max-width: 500px;
-  color: #333333;
+  color: ${theme.color};
   margin: auto;
   margin-top: 50px;
 
@@ -21,7 +24,7 @@ const container = css`
   h2 {
     font-size: 12px;
     font-weight: 600;
-    color: #c9cccf;
+    color: ${lighten(0.6)(theme.color)};
     text-transform: uppercase;
     letter-spacing: 1.2px;
   }
@@ -76,7 +79,7 @@ const container = css`
     margin-bottom: 1rem;
     margin-right: 0.5rem;
     padding: 0.25rem 1rem;
-    background-color: #f1f5f7;
+    background-color: ${darken(0.05)(theme.background)};
     white-space: nowrap;
   }
 `;
@@ -88,17 +91,21 @@ const Section = ({ type, title, content }) => (
   </div>
 );
 
-const MainTemplate = ({ name, description, sections = [], showMenu }) => (
-  <Layout>
-    <div css={container}>
-      <Header name={name} showMenu={showMenu} />
-      {description}
-      {sections.map(asd => (
-        <Section {...asd} />
-      ))}
-    </div>
-  </Layout>
-);
+const MainTemplate = ({ name, description, sections = [], cvFormat }) => {
+  const Header = cvFormat ? HeaderCV : HeaderWeb;
+
+  return (
+    <Layout>
+      <div css={container}>
+        <Header name={name} />
+        {description}
+        {sections.map(asd => (
+          <Section {...asd} />
+        ))}
+      </div>
+    </Layout>
+  );
+};
 
 export const query = graphql`
   {
@@ -146,6 +153,7 @@ const Main = ({ data }) => {
   if (!main) return null;
 
   const { name, description, body } = main.node;
+  const { cvFormat } = data.site.siteMetadata;
 
   const sections = body.map(section => {
     const { primary, fields, type } = section;
@@ -162,7 +170,7 @@ const Main = ({ data }) => {
       name={RichText.render(name)}
       description={RichText.render(description)}
       sections={sections}
-      showMenu={!data.site.siteMetadata.cvFormat}
+      cvFormat={!!cvFormat}
     />
   );
 };
