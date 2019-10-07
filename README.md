@@ -15,7 +15,7 @@
 - [x] Set up Webhook with Prismic 🔥
 - [ ] Fix a11y issues
 - [ ] Check Lighthouse score
-- [ ] Set Prismic preview --> https://prismic.io/blog/prismic-gatsby-preview-plugin
+- [x] Set Prismic preview --> https://prismic.io/blog/prismic-gatsby-preview-plugin
 - [ ] Re write sections of cv with --> https://www.freecodecamp.org/news/writing-a-killer-software-engineering-resume-b11c91ef699d/
 - [ ] Add Contact popup
   - [ ] Show email
