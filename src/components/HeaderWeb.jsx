@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { MdFileDownload } from 'react-icons/md';
+import { darken } from 'polished';
 
 const MenusWrap = styled.div`
   position: absolute;
-  right: -130px;
+  right: -90px;
+  top: 0;
 `;
 
 const HeaderMenu = styled.div`
-  color: #a1a5a7;
+  color: ${darken(0.4)(theme.background)};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,6 +25,7 @@ const HeaderMenu = styled.div`
 
 const HeaderWeb = ({ name, contact }) => (
   <header style={{ position: 'relative' }}>
+    <h1>{name}</h1>
     <MenusWrap>
       <a href="/static/cv.pdf" download={`${name} - CV`}>
         <HeaderMenu>
@@ -31,7 +34,6 @@ const HeaderWeb = ({ name, contact }) => (
         </HeaderMenu>
       </a>
     </MenusWrap>
-    <h1>{name}</h1>
   </header>
 );
 

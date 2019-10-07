@@ -11,7 +11,7 @@
 - [x] Add Download link that takes the pdf and download it in the client
 - [ ] Finish styles from here --> https://standardresume.co/r/dana-andrews
   - [ ] Make it responsive
-- [ ] Make it PWA
+- [x] Make it PWA
 - [x] Set up Webhook with Prismic 🔥
 - [ ] Fix a11y issues
 - [ ] Check Lighthouse score
@@ -21,5 +21,8 @@
   - [ ] Show email
   - [ ] Add link to my website
 - [ ] Open source it?
+  - [ ] Move it to Gatsby theme
+  - [ ] Add section of customization with component shadowing
+- [ ] Add typescript
 - [ ] Add 404 page
-- [ ] Change gatsby source --> https://prismic.io/docs/reactjs/getting-started/prismic-gatsby
+- [x] Change gatsby source --> https://prismic.io/docs/reactjs/getting-started/prismic-gatsby
