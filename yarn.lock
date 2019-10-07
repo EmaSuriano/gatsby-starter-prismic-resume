@@ -5025,7 +5025,7 @@ gatsby-source-filesystem@^2.1.2:
     valid-url "^1.0.9"
     xstate "^4.6.7"
 
-gatsby-source-graphql-universal@^3.1.4:
+gatsby-source-graphql-universal@^3.1.6:
   version "3.1.7"
   resolved "https://registry.yarnpkg.com/gatsby-source-graphql-universal/-/gatsby-source-graphql-universal-3.1.7.tgz#b9c0df9251b1660200b9bc57ce2634085fbf10f4"
   integrity sha512-JJB3tlNc0/O7Rm4rLl4WGetBFrPWF0UhXfwso2e126XCE6EN9OVu+8dFivZ2nzTR8qvjMcMCtXgQd1yTbFF34A==
@@ -5054,19 +5054,19 @@ gatsby-source-graphql@^2.0.15, gatsby-source-graphql@^2.0.8:
     node-fetch "^1.7.3"
     uuid "^3.3.3"
 
-gatsby-source-prismic-graphql@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/gatsby-source-prismic-graphql/-/gatsby-source-prismic-graphql-3.3.1.tgz#85524af96ce68431d571ab67cf3dbb94837c2b4a"
-  integrity sha512-ZQLCODgfTpvlkwHj2zoZ/lTd64DHNwRbssKRhdKJzfbYlFqHCf1y+aUfJUKTYJFEtE7PhgGtr48ZMLZGSuFupw==
+gatsby-source-prismic-graphql@3.4.0-beta.1:
+  version "3.4.0-beta.1"
+  resolved "https://registry.yarnpkg.com/gatsby-source-prismic-graphql/-/gatsby-source-prismic-graphql-3.4.0-beta.1.tgz#e07f9c5f0dc9a1ad3ec1e88d9d2c633c6d665ccc"
+  integrity sha512-/OfYCeUkEV2SB6IS77vsBVk0ztS6gYTCw5Fboj1m4ey4j80BYZ7Q4m+Q2aTbcX6R36luT6eyTlNZ4DejdHTAPQ==
   dependencies:
     apollo-boost "^0.3.1"
     apollo-link-context "^1.0.17"
     gatsby-image "^2.2.4"
     gatsby-source-filesystem "^2.1.2"
     gatsby-source-graphql "^2.0.15"
-    gatsby-source-graphql-universal "^3.1.4"
+    gatsby-source-graphql-universal "^3.1.6"
     path-to-regexp "^3.0.0"
-    prismic-javascript "^2.0.1"
+    prismic-javascript "^2.1.1"
     traverse "^0.6.6"
     url-pattern "^1.0.3"
 
@@ -8764,7 +8764,7 @@ prismic-javascript@^1.1.5:
     cross-fetch "^2.2.0"
     promise-polyfill "8.0.0"
 
-prismic-javascript@^2.0.1:
+prismic-javascript@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-2.1.1.tgz#fd82bd3a8882acc69c7b52c257340516dadec0d2"
   integrity sha512-37j0Ypqwk/cM/x5VB1pdMS0I9umHIfQbB7TxiXeVjQjqz6zuZSdToYy67VB7lEDUWLZE4U4k1H2zTSH1QUFi+g==
