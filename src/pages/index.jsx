@@ -12,7 +12,7 @@ const container = css`
   max-width: 500px;
   color: ${theme.color};
   margin: auto;
-  margin-top: 50px;
+  padding-top: 50px;
 
   h1 {
     font-size: 30px;

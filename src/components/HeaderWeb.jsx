@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { MdFileDownload } from 'react-icons/md';
 import { darken } from 'polished';
+import theme from '../theme.json';
 
 const MenusWrap = styled.div`
   position: absolute;
