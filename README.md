@@ -26,3 +26,4 @@
 - [ ] Add typescript
 - [ ] Add 404 page
 - [x] Change gatsby source --> https://prismic.io/docs/reactjs/getting-started/prismic-gatsby
+- [ ] Use linked API instead of Prismic to get the information for the resume
